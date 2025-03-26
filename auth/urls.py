@@ -19,5 +19,6 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('accounts/', include('accounts.urls')) #accounts.urls포함한 모든 애들 저기로 가게 하세요
+    path('accounts/', include('accounts.urls')), #accounts.urls포함한 모든 애들 저기로 가게 하세요
+    path('articles/', include('articles.urls')), # 앞에잇는 앱 이름으로 이동시켜주는 역할
 ]
