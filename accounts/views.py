@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
-from .forms import CustomUserCreationForm
+from .forms import CustomUserCreationForm, CustomAuthenticationForm
+from django.contrib.auth import login as auth_login # 장고의 login 함수 이름을 auth_login로 바꾸기(이름 중복 때문)
 # Create your views here.
 
 def signup(request):
@@ -15,3 +16,18 @@ def signup(request):
         'form': form
     }
     return render(request, 'signup.html', context)
+
+def login(request):
+    if request.method == 'POST':
+        form = CustomAuthenticationForm(request, request.POST)
+        if form.is_valid(): # 유저정보는 저장할 필요가 없기 때문에 save 안함
+             auth_login(request, form.get_user())
+             return redirect('articles:index')
+    else:
+        form = CustomAuthenticationForm()
+
+    context = {
+        'form': form
+    }
+
+    return render(request, 'login.html', context)
