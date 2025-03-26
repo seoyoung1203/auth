@@ -15,3 +15,4 @@
             <a href="{% url 'accounts:login' %}" class="nav-link">login</a>
          {% endif %}
 ```
+- 여러개 연결 >> 모델링 한 번 더
