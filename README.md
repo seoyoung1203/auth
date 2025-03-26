@@ -15,4 +15,9 @@
             <a href="{% url 'accounts:login' %}" class="nav-link">login</a>
          {% endif %}
 ```
-- 여러개 연결 >> 모델링 한 번 더
+- 여러개 연결 >> 모델링 한 번 더 (articles도 만들었다)
+
+.get('next') 무조건 코드는 실행할라고.
+next 인자가 있으면 --
+없을때 -- none
+

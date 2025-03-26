@@ -1,5 +1,5 @@
 from django.urls import path
-from . import views #views.signup
+from .import views #views.signup
 
 app_name = 'accounts'
 
