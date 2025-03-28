@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .forms import ArticleForm, CommentForm
-from .models import Article
+from .models import Article, Comment
 from django.contrib.auth.decorators import login_required # decorators >> 함수를 꾸며주는 역할(create 함수)
 # -> 로그인 페이지로 redirect 시켜줌
 
@@ -60,4 +60,15 @@ def comment_create(request, article_id):
         comment.save()
 
         return redirect('articles:detail', id=article_id)
+
+@login_required
+def comment_delete(request, article_id, comment_id):# 인자
+    comment = Comment.objects.get(id=comment_id)
+    if request.user == comment.user: #로그인한 사람이 comment를 작성한 유저와 같나요?
+        comment.delete()
+
+    return redirect('articles:detail', id=article_id)
+
+
+
 

@@ -26,3 +26,11 @@ next 인자가 있으면 --
 ```
 action을 비워두면 자기자신으로 돌아가지만 여기서는 
 
+```shell
+    {% if user == comment.user %} 
+    <a href="{% url 'articles:comment_delete' article.id comment.id %}">delete</a>
+    {% endif %}
+```
+내가 작성한 댓글만 delete 버튼 만들기
+
+
