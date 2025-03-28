@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .forms import ArticleForm
+from .forms import ArticleForm, CommentForm
 from .models import Article
 from django.contrib.auth.decorators import login_required # decorators >> 함수를 꾸며주는 역할(create 함수)
 # -> 로그인 페이지로 redirect 시켜줌
@@ -30,3 +30,34 @@ def create(request):
     }
 
     return render(request, 'create.html', context)
+
+def detail(request, id):
+    article = Article.objects.get(id=id)
+    form = CommentForm()
+    context = {
+        'article': article,
+        'form': form,
+    }
+
+    return render(request, 'detail.html', context)
+
+@login_required # 로그인이 되어야만 기능 실행 가능
+def comment_create(request, article_id):
+    form = CommentForm(request.POST) # 사용자가 입력한 데이터 인자로 받음
+
+    if form.is_valid():
+        #form.save() # 유저 정보, article 정보 빠져서 에러남
+        comment = form.save(commit=False)
+        # 객체를 저장하는 경우
+        # comment.user = request.user
+        # article = Article.odjects.get(id=article_id)
+        # comment.article = article
+        
+        # id 값을 저장하는 경우
+        comment.user_id = request.user.id
+        comment.article_id = article_id
+
+        comment.save()
+
+        return redirect('articles:detail', id=article_id)
+

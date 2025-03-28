@@ -21,3 +21,8 @@
 next 인자가 있으면 --
 없을때 -- none
 
+```shell
+<form action="{% url 'articles:comment_create' %}" method="POST">
+```
+action을 비워두면 자기자신으로 돌아가지만 여기서는 
+
