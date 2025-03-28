@@ -31,6 +31,6 @@ action을 비워두면 자기자신으로 돌아가지만 여기서는 '댓글�
     <a href="{% url 'articles:comment_delete' article.id comment.id %}">delete</a>
     {% endif %}
 ```
-내가 작성한 댓글만 delete 버튼 만들기
+내가 작성한 댓글만 delete 버튼 만들기 >> if 조건문 달아줌
 
 
