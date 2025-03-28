@@ -5,6 +5,13 @@ from django.contrib.auth.decorators import login_required # decorators >> 함수
 # -> 로그인 페이지로 redirect 시켜줌
 
 # Create your views here.
+
+def delete(request, id):
+    article = Article.objects.get(id=id)
+    if request.user == article.user:
+        article.delete()
+    return redirect('articles:index')
+
 def index(request):
     articles = Article.objects.all()
 
@@ -64,10 +71,12 @@ def comment_create(request, article_id):
 @login_required
 def comment_delete(request, article_id, comment_id):# 인자
     comment = Comment.objects.get(id=comment_id)
+    
     if request.user == comment.user: #로그인한 사람이 comment를 작성한 유저와 같나요?
         comment.delete()
 
     return redirect('articles:detail', id=article_id)
+
 
 
 
