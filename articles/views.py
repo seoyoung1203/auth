@@ -6,11 +6,6 @@ from django.contrib.auth.decorators import login_required # decorators >> 함수
 
 # Create your views here.
 
-def delete(request, id):
-    article = Article.objects.get(id=id)
-    if request.user == article.user:
-        article.delete()
-    return redirect('articles:index')
 
 def index(request):
     articles = Article.objects.all()
@@ -48,6 +43,36 @@ def detail(request, id):
 
     return render(request, 'detail.html', context)
 
+@login_required
+def update(request, id):
+    article = Article.objects.get(id=id)
+
+    if request.user != article.user:
+        return redirect('articles:index')
+
+    if request.method == 'POST':
+        form = ArticleForm(request.POST, instance=article)
+        if form.is_valid():
+            form.save()
+            return redirect('articles:detail', id=id)
+    else:
+        form = ArticleForm(instance=article)
+
+
+    context = {
+        'form': form
+    }
+
+    return render(request, 'update.html', context)
+
+
+@login_required
+def delete(request, id):
+    article = Article.objects.get(id=id)
+    if request.user == article.user:
+        article.delete()
+    return redirect('articles:index')
+
 @login_required # 로그인이 되어야만 기능 실행 가능
 def comment_create(request, article_id):
     form = CommentForm(request.POST) # 사용자가 입력한 데이터 인자로 받음
@@ -76,6 +101,8 @@ def comment_delete(request, article_id, comment_id):# 인자
         comment.delete()
 
     return redirect('articles:detail', id=article_id)
+
+
 
 
 
