@@ -24,7 +24,7 @@ next 인자가 있으면 --
 ```shell
 <form action="{% url 'articles:comment_create' %}" method="POST">
 ```
-action을 비워두면 자기자신으로 돌아가지만 여기서는 
+action을 비워두면 자기자신으로 돌아가지만 여기서는 '댓글달기'를 해야하기 때문에 url을 채움
 
 ```shell
     {% if user == comment.user %} 
